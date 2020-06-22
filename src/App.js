@@ -14,8 +14,8 @@ class App extends Component {
   componentDidMount() {
     // '/' root in firebase for data for synchrinise
     base.syncState('/', {
-      context: this, //our class
-      state: 'message'
+      context: this, //our clas s
+      state: 'messages'
     })
   }
 
@@ -41,7 +41,7 @@ class App extends Component {
         <div>
           <div className='messages'>
             <div className="message">
-              {messages}
+            helloooo  {messages}
             </div>
           </div>
         </div>
