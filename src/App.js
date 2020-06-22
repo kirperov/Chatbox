@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   addMessage = message => {
-    const messages = { ... this.state.messages }
+    const messages = { ...this.state.messages }
     messages[`message-${Date.now()}`] = message
     this.setState({messages});
   }
