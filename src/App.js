@@ -3,10 +3,20 @@ import Formulaire from './components/Formulaire'
 import './App.css'
 import Message from './components/Message'
 
+//Firebase
+import base from './components/base'
 class App extends Component {
   state = {
     messages: {},
     pseudo: this.props.match.params.pseudo
+  }
+
+  componentDidMount() {
+    // '/' root in firebase for data for synchrinise
+    base.syncState('/', {
+      context: this, //our class
+      state: 'message'
+    })
   }
 
   addMessage = message => {
