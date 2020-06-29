@@ -1,10 +1,17 @@
 import React, { Component, createRef } from 'react'
 import Formulaire from './components/Formulaire'
 import './App.css'
+import './animations.css'
 import Message from './components/Message'
 
 //Firebase
 import base from './components/base'
+//Aniamation (package react-transition group)
+import {
+  CSSTransition,
+  TransitionGroup
+} from 'react-transition-group'
+
 class App extends Component {
   state = {
     messages: {},
@@ -20,7 +27,7 @@ class App extends Component {
       state: 'messages'
     })
   }
-  // To verify that state is update (I use it for messageRef to scrol the message automaticly in props ref below)
+  // To verify that state is update (I use it for messageRef to scrol the message automaticly in props ref in render below)
    componentDidUpdate() {
     const ref = this.messageRef.current
     ref.scrollTop = ref.scrollHeight
@@ -46,21 +53,25 @@ class App extends Component {
     const messages = Object
     .keys(this.state.messages)
     .map(key => (
-      <Message
-      isUser={this.isUser} 
-      key={key}
-      message={this.state.messages[key].message}
-      pseudo={this.state.messages[key].pseudo}
-       />
+      <CSSTransition
+        timeout={200}
+        classNames='fade'
+        key={key}>
+        <Message
+          isUser={this.isUser} 
+          message={this.state.messages[key].message}
+          pseudo={this.state.messages[key].pseudo}
+        />
+      </CSSTransition>
     ))
                           
     return (
       <div className='box'>
         <div>
           <div className='messages' ref={this.messageRef}>
-            <div className="message">
+            <TransitionGroup className="message">
               {messages}
-            </div>
+            </TransitionGroup>
           </div>
         </div>
         <Formulaire
