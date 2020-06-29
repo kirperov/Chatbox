@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import Formulaire from './components/Formulaire'
 import './App.css'
 import Message from './components/Message'
@@ -10,6 +10,8 @@ class App extends Component {
     messages: {},
     pseudo: this.props.match.params.pseudo
   }
+  //Create ref
+  messageRef = createRef()
 
   componentDidMount() {
     // '/' root in firebase for data for synchrinise
@@ -18,6 +20,11 @@ class App extends Component {
       state: 'messages'
     })
   }
+  // To verify that state is update (I use it for messageRef for scrol the message automaticly in props ref below)
+   componentDidUpdate() {
+    const ref = this.messageRef.current
+    ref.scrollTop = ref.scrollHeight
+   }
 
   addMessage = message => {
     const messages = { ...this.state.messages }
@@ -39,9 +46,9 @@ class App extends Component {
     return (
       <div className='box'>
         <div>
-          <div className='messages'>
+          <div className='messages' ref={this.messageRef}>
             <div className="message">
-            helloooo  {messages}
+              {messages}
             </div>
           </div>
         </div>
