@@ -14,13 +14,13 @@ class App extends Component {
   messageRef = createRef()
 
   componentDidMount() {
-    // '/' root in firebase for data for synchrinise
+    // '/' root in firebase data to synchrinise
     base.syncState('/', {
-      context: this, //our clas s
+      context: this, //our class
       state: 'messages'
     })
   }
-  // To verify that state is update (I use it for messageRef for scrol the message automaticly in props ref below)
+  // To verify that state is update (I use it for messageRef to scrol the message automaticly in props ref below)
    componentDidUpdate() {
     const ref = this.messageRef.current
     ref.scrollTop = ref.scrollHeight
@@ -38,12 +38,16 @@ class App extends Component {
       })
     this.setState({messages});
   }
+
+  //Method to know if pseudo is current pseudo 
+  isUser = pseudo => pseudo === this.state.pseudo 
   render () {
   
     const messages = Object
     .keys(this.state.messages)
     .map(key => (
-      <Message 
+      <Message
+      isUser={this.isUser} 
       key={key}
       message={this.state.messages[key].message}
       pseudo={this.state.messages[key].pseudo}
